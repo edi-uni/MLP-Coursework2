@@ -457,9 +457,9 @@ class ConvolutionalLayer(LayerWithParameters):
         output_width = (self.input_width - self.kernel_width + 2 * self.padding) // self.stride + 1
 
         inputs_col = im2col.im2col_indices(x=inputs, field_height=self.kernel_height, field_width=self.kernel_width, padding=self.padding, stride=self.stride)
-        filter_col = self.kernels.reshape(self.num_output_channels, -1)
+        kernels_col = self.kernels.reshape(self.num_output_channels, -1)
 
-        out = filter_col.dot(inputs_col) + self.biases.reshape(-1,1)
+        out = kernels_col.dot(inputs_col) + self.biases.reshape(-1,1)
         out = out.reshape(self.num_output_channels, output_height, output_width, batch_size)
         out = out.transpose(3, 0, 1, 2)
 
