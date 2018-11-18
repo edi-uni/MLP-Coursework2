@@ -80,9 +80,9 @@ class ExperimentBuilder(nn.Module):
         total_num_params = 0
         for param in self.parameters():
             total_num_params += np.prod(param.shape)
-            
-         return total_num_params
-            
+
+        return total_num_params
+
     def run_train_iter(self, x, y):
         """
         Receives the inputs and targets for the model and runs a training iteration. Returns loss and accuracy metrics.
