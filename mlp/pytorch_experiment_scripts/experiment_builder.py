@@ -208,6 +208,7 @@ class ExperimentBuilder(nn.Module):
                             best_validation_model_acc=self.best_val_model_acc)
 
         print("Generating test set evaluation metrics")
+        print("BEST INDEX:", self.best_val_model_idx)
         self.load_model(model_save_dir=self.experiment_saved_models, model_idx=self.best_val_model_idx,
                         # load best validation model
                         model_save_name="train_model")
