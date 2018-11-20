@@ -35,7 +35,8 @@ class ExperimentBuilder(nn.Module):
         super(ExperimentBuilder, self).__init__()
         if torch.cuda.is_available() and use_gpu:  # checks whether a cuda gpu is available and whether the gpu flag is True
             self.device = torch.device('cuda')  # sets device to be cuda
-            os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # sets the main GPU to be the one at index 0 (on multi gpu machines you can choose which one you want to use by using the relevant GPU ID)
+            os.environ[
+                "CUDA_VISIBLE_DEVICES"] = "0"  # sets the main GPU to be the one at index 0 (on multi gpu machines you can choose which one you want to use by using the relevant GPU ID)
             print("use GPU")
         else:
             print("use CPU")
@@ -190,7 +191,7 @@ class ExperimentBuilder(nn.Module):
 
             save_statistics(experiment_log_dir=self.experiment_logs, filename='summary.csv',
                             stats_dict=total_losses, current_epoch=i,
-                            continue_from_mode=True if self.starting_epoch != 0 else False)  # save statistics to stats file.
+                            continue_from_mode=True if (self.starting_epoch != 0 or i > 0) else False)  # save statistics to stats file.
 
             # load_statistics(experiment_log_dir=self.experiment_logs, filename='summary.csv') # How to load a csv file if you need to
 
@@ -207,7 +208,6 @@ class ExperimentBuilder(nn.Module):
                             best_validation_model_acc=self.best_val_model_acc)
 
         print("Generating test set evaluation metrics")
-        print("Index of the best epoch values for accuracy and loss:", self.best_val_model_idx)
         self.load_model(model_save_dir=self.experiment_saved_models, model_idx=self.best_val_model_idx,
                         # load best validation model
                         model_save_name="train_model")
